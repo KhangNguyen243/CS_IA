@@ -4,7 +4,6 @@ import logging
 import sys
 
 from flask import Flask, render_template
-
 from stock_management import commands, public, user, location
 from stock_management.extensions import (
     bcrypt,

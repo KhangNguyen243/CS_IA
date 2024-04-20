@@ -29,17 +29,18 @@ class Role(PkModel):
 class User(UserMixin, PkModel):
     """A user of the app."""
 
-    __tablename__ = "users"
-    username = Column(db.String(80), unique=True, nullable=False)
-    email = Column(db.String(80), unique=True, nullable=False)
-    _password = Column("password", db.LargeBinary(128), nullable=True)
-    created_at = Column(
-        db.DateTime, nullable=False, default=dt.datetime.now(dt.timezone.utc)
-    )
-    first_name = Column(db.String(30), nullable=True)
-    last_name = Column(db.String(30), nullable=True)
-    active = Column(db.Boolean(), default=False)
-    is_admin = Column(db.Boolean(), default=False)
+    __tablename__ = "Machine"
+    ID_Machine = db.Column(db.Integer, primary_key=True, nullable=False)
+    ID_Location = db.Column(db.Integer, db.ForeignKey('location.id'), nullable=False)  # Assuming there's a 'Location' table
+    Type = db.Column(db.String(10), nullable=False)
+    Serial = db.Column(db.String(10), nullable=False)
+    Model = db.Column(db.String(10), nullable=False)
+    Price = db.Column(db.Integer, nullable=False)
+    Status = db.Column(db.String(10), nullable=False)
+    Description = db.Column(db.String(100))
+
+    # Relationship to MachineHistory
+    history = db.relationship('MachineHistory', backref='machine', lazy=True)
 
     @hybrid_property
     def password(self):
